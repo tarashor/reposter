@@ -16,12 +16,18 @@ java {
 
 repositories {
     mavenCentral()
+    maven(url="https://jitpack.io")
 }
 
 dependencies {
     implementation("org.springframework.boot:spring-boot-starter-web")
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
     implementation("org.jetbrains.kotlin:kotlin-reflect")
+
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.2")
+    implementation("com.github.kotlin-telegram-bot:kotlin-telegram-bot:6.2.0")
+    implementation("org.twitter4j:twitter4j-core:4.0.7")
+
     testImplementation("org.springframework.boot:spring-boot-starter-test")
     testImplementation("org.jetbrains.kotlin:kotlin-test-junit5")
     testRuntimeOnly("org.junit.platform:junit-platform-launcher")
