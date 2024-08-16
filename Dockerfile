@@ -1,11 +1,11 @@
 # Stage 1: Build the application
-FROM gradle:7.6-jdk17 AS build
+FROM gradle:jdk17 AS build
 WORKDIR /app
 
 # Copy Gradle wrapper and configuration files
 COPY gradlew .
 COPY gradle ./gradle
-COPY build.gradle settings.gradle ./
+COPY build.gradle.kts settings.gradle.kts ./
 
 # Copy source code
 COPY src ./src
@@ -21,10 +21,10 @@ FROM openjdk:17-alpine
 WORKDIR /app
 
 # Copy the built JAR file from the build stage
-COPY --from=build /app/build/libs/demo-aws.jar ./demo-aws.jar
+COPY --from=build /app/build/libs/reposter-0.0.1-SNAPSHOT.jar ./reposter.jar
 
 # Expose the application port
 EXPOSE 8080
 
 # Command to run the application
-CMD ["java", "-jar", "demo-aws.jar"]
+CMD ["java", "-jar", "reposter.jar"]
