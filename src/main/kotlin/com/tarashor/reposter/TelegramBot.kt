@@ -15,23 +15,24 @@ import java.io.File
 class TelegramBot : CommandLineRunner{
     override fun run(vararg args: String?) {
         val bot = bot {
-            token = "YOUR_TELEGRAM_BOT_TOKEN"
+            token = "7229516327:AAG8FoDMXutlYwhih-lHThp_hd92bPDS8qY"
             dispatch {
                 channel {
+                    val photo = channelPost.photo?.last()
+                    val caption = channelPost.caption ?: ""
 
-                    handle { channelPost ->
-                        val photo = channelPost.message.photo?.last()
-                        val caption = channelPost.message.caption ?: ""
+                    println(photo)
 
-                        // Download the photo
-                        val photoFile = downloadPhoto(photo!!.fileId)
+                    bot.downloadFileBytes(photo!!.fileId)
+                    // Download the photo
+                    val photoFile = downloadPhoto(photo!!.fileId)
 
-                        // Post to Twitter
-                        postToTwitter(photoFile, caption)
+                    // Post to Twitter
+                    postToTwitter(photoFile, caption)
 
-                        // Post to Instagram
-                        postToInstagram(photoFile, caption)
-                    }
+                    // Post to Instagram
+                    postToInstagram(photoFile, caption)
+
                 }
             }
         }
@@ -42,21 +43,22 @@ class TelegramBot : CommandLineRunner{
     fun downloadPhoto(fileId: String): File {
         // Implement photo download logic here
         // Return the downloaded file
+        return File(".")
     }
 
     fun postToTwitter(photo: File, caption: String) {
-        val cb = ConfigurationBuilder()
-        cb.setDebugEnabled(true)
-            .setOAuthConsumerKey("YOUR_CONSUMER_KEY")
-            .setOAuthConsumerSecret("YOUR_CONSUMER_SECRET")
-            .setOAuthAccessToken("YOUR_ACCESS_TOKEN")
-            .setOAuthAccessTokenSecret("YOUR_ACCESS_TOKEN_SECRET")
-
-        val tf = TwitterFactory(cb.build())
-        val twitter = tf.instance
-
-        val status = twitter.updateStatus(StatusUpdate(caption).media(photo))
-        println("Successfully updated Twitter status: ${status.text}")
+//        val cb = ConfigurationBuilder()
+//        cb.setDebugEnabled(true)
+//            .setOAuthConsumerKey("YOUR_CONSUMER_KEY")
+//            .setOAuthConsumerSecret("YOUR_CONSUMER_SECRET")
+//            .setOAuthAccessToken("YOUR_ACCESS_TOKEN")
+//            .setOAuthAccessTokenSecret("YOUR_ACCESS_TOKEN_SECRET")
+//
+//        val tf = TwitterFactory(cb.build())
+//        val twitter = tf.instance
+//
+//        val status = twitter.updateStatus(StatusUpdate(caption).media(photo))
+//        println("Successfully updated Twitter status: ${status.text}")
     }
 
     fun postToInstagram(photo: File, caption: String) {
